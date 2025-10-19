@@ -3,6 +3,7 @@ import type { Metadata } from "next"
 import { Nunito, Space_Grotesk } from "next/font/google"
 import { Suspense } from "react"
 import { CartProvider } from "@/contexts/cart-context"
+import Provider from "./provider"
 import "./globals.css"
 
 const nunito = Nunito({
@@ -32,9 +33,11 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`font-sans ${nunito.variable} ${spaceGrotesk.variable} antialiased`}>
-        <CartProvider>
-          <Suspense fallback={null}>{children}</Suspense>
-        </CartProvider>
+        <Provider>
+          <CartProvider>
+            <Suspense fallback={null}>{children}</Suspense>
+          </CartProvider>
+        </Provider>
       </body>
     </html>
   )

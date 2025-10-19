@@ -158,7 +158,6 @@ export function AuthorPortfolio({ authorId }: AuthorPortfolioProps) {
           </div>
         </div>
       </div>
-
       {/* Portfolio Grid */}
       <div className={viewMode === "grid" ? "grid md:grid-cols-2 lg:grid-cols-3 gap-6" : "space-y-4"}>
         {filteredArtworks.map((artwork) => (
@@ -243,7 +242,7 @@ export function AuthorPortfolio({ authorId }: AuthorPortfolioProps) {
               </>
             ) : (
               /* List View */
-              <CardContent className="p-4">
+              (<CardContent className="p-4">
                 <div className="flex items-center space-x-4">
                   <div className="relative w-20 h-20 rounded-md overflow-hidden flex-shrink-0">
                     <img
@@ -298,12 +297,11 @@ export function AuthorPortfolio({ authorId }: AuthorPortfolioProps) {
                     </div>
                   </div>
                 </div>
-              </CardContent>
+              </CardContent>)
             )}
           </Card>
         ))}
       </div>
-
       {/* Load More */}
       <div className="text-center pt-4">
         <Button variant="outline" size="lg" className="bg-transparent">
@@ -311,5 +309,5 @@ export function AuthorPortfolio({ authorId }: AuthorPortfolioProps) {
         </Button>
       </div>
     </div>
-  )
+  );
 }

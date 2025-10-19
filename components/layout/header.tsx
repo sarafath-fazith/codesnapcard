@@ -8,6 +8,7 @@ import { Badge } from "@/components/ui/badge"
 import { Menu, X, Search, ShoppingCart, User, Coins } from "lucide-react"
 import { useCart } from "@/contexts/cart-context"
 import { AuthModal } from "@/components/auth/auth-modal"
+import { UserNav } from "@/components/layout/user-nav"
 
 export function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
@@ -68,13 +69,11 @@ export function Header() {
             {/* User Actions */}
             <div className="flex items-center space-x-4">
               {/* Coins Display */}
-              <Link href="/buy-coins">
-                <div className="hidden sm:flex items-center space-x-1 bg-secondary/10 px-3 py-1.5 rounded-full border border-secondary/20 cursor-pointer hover:bg-secondary/20">
-                  <Coins className="h-4 w-4 text-secondary" />
-                  <span className="text-sm font-semibold text-secondary">
-                    {userCoins.toLocaleString()}
-                  </span>
-                </div>
+              <Link href="/buy-coins" className="hidden sm:flex items-center space-x-1 bg-secondary/10 px-3 py-1.5 rounded-full border border-secondary/20 cursor-pointer hover:bg-secondary/20">
+                <Coins className="h-4 w-4 text-secondary" />
+                <span className="text-sm font-semibold text-secondary">
+                  {userCoins.toLocaleString()}
+                </span>
               </Link>
 
               {/* Action Buttons */}
@@ -97,14 +96,7 @@ export function Header() {
               </div>
 
               {/* User Menu */}
-              <Button
-                variant="ghost"
-                size="sm"
-                className="hover:bg-secondary/10"
-                onClick={() => setIsAuthModalOpen(true)}
-              >
-                <User className="h-4 w-4" />
-              </Button>
+              <UserNav />
 
               {/* Mobile Menu Button */}
               <div className="flex items-center md:hidden">
@@ -153,13 +145,11 @@ export function Header() {
 
                 {/* Mobile Coins & Profile */}
                 <div className="flex items-center justify-between pt-2 border-t">
-                  <Link href="/buy-coins">
-                    <div className="flex items-center space-x-2">
-                      <Coins className="h-4 w-4 text-secondary" />
-                      <span className="text-sm font-semibold text-secondary">
-                        {userCoins.toLocaleString()} Coins
-                      </span>
-                    </div>
+                  <Link href="/buy-coins" className="flex items-center space-x-2">
+                    <Coins className="h-4 w-4 text-secondary" />
+                    <span className="text-sm font-semibold text-secondary">
+                      {userCoins.toLocaleString()} Coins
+                    </span>
                   </Link>
                   <div className="flex items-center space-x-2">
                     <Button variant="ghost" size="sm" asChild>
@@ -184,7 +174,6 @@ export function Header() {
           )}
         </div>
       </header>
-
       <AuthModal open={isAuthModalOpen} onOpenChange={setIsAuthModalOpen} />
     </>
   )

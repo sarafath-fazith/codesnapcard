@@ -194,7 +194,7 @@ export default function CheckoutSuccessPage() {
               </div>
               <div className="flex space-x-3">
                 <Button asChild>
-                  <Link href="/">
+                  <Link href="/" legacyBehavior>
                     <Home className="h-4 w-4 mr-2" />
                     Back to Home
                   </Link>
@@ -208,5 +208,5 @@ export default function CheckoutSuccessPage() {
         </div>
       </div>
     </div>
-  )
+  );
 }

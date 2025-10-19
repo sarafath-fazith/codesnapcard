@@ -3,6 +3,8 @@
 import type React from "react"
 
 import { useState } from "react"
+import { signIn } from "next-auth/react"
+import { useRouter } from "next/navigation"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
@@ -10,6 +12,7 @@ import { Checkbox } from "@/components/ui/checkbox"
 import { Separator } from "@/components/ui/separator"
 import { Eye, EyeOff, Mail, Lock, Github, Chrome } from "lucide-react"
 import Link from "next/link"
+import { useToast } from "@/hooks/use-toast"
 
 export function LoginForm() {
   const [showPassword, setShowPassword] = useState(false)
@@ -19,21 +22,29 @@ export function LoginForm() {
     password: "",
     rememberMe: false,
   })
+  const router = useRouter()
+  const { toast } = useToast()
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     setIsLoading(true)
 
-    // Simulate login process
-    await new Promise((resolve) => setTimeout(resolve, 1500))
+    const result = await signIn("credentials", {
+      ...formData,
+      redirect: false,
+    })
 
     setIsLoading(false)
-    // Handle successful login - redirect to dashboard or previous page
-  }
 
-  const handleSocialLogin = (provider: string) => {
-    console.log(`Login with ${provider}`)
-    // Handle social login
+    if (result?.error) {
+      toast({
+        title: "Login Failed",
+        description: result.error,
+        variant: "destructive",
+      })
+    } else {
+      router.push("/")
+    }
   }
 
   return (
@@ -118,11 +129,11 @@ export function LoginForm() {
 
       {/* Social Login */}
       <div className="grid grid-cols-2 gap-3">
-        <Button type="button" variant="outline" onClick={() => handleSocialLogin("google")} className="bg-transparent">
+        <Button type="button" variant="outline" onClick={() => signIn("google")} className="bg-transparent">
           <Chrome className="h-4 w-4 mr-2" />
           Google
         </Button>
-        <Button type="button" variant="outline" onClick={() => handleSocialLogin("github")} className="bg-transparent">
+        <Button type="button" variant="outline" onClick={() => signIn("github")} className="bg-transparent">
           <Github className="h-4 w-4 mr-2" />
           GitHub
         </Button>

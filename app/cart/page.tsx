@@ -29,7 +29,7 @@ export default function CartPage() {
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Button asChild size="lg">
-                <Link href="/gallery">
+                <Link href="/gallery" legacyBehavior>
                   <ShoppingBag className="h-4 w-4 mr-2" />
                   Browse Gallery
                 </Link>
@@ -42,7 +42,7 @@ export default function CartPage() {
         </div>
         <Footer />
       </div>
-    )
+    );
   }
 
   return (
@@ -157,7 +157,7 @@ export default function CartPage() {
                       <p className="text-sm text-muted-foreground">Discover more amazing digital assets</p>
                     </div>
                     <Button variant="outline" asChild>
-                      <Link href="/gallery">
+                      <Link href="/gallery" legacyBehavior>
                         Browse More
                         <ArrowRight className="ml-2 h-4 w-4" />
                       </Link>
@@ -191,7 +191,7 @@ export default function CartPage() {
                   </div>
 
                   <Button asChild size="lg" className="w-full">
-                    <Link href="/checkout">
+                    <Link href="/checkout" legacyBehavior>
                       Proceed to Checkout
                       <ArrowRight className="ml-2 h-4 w-4" />
                     </Link>
@@ -211,5 +211,5 @@ export default function CartPage() {
       </div>
       <Footer />
     </div>
-  )
+  );
 }

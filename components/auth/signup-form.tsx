@@ -1,27 +1,30 @@
 "use client"
 
 import type React from "react"
-
 import { useState } from "react"
+import { useToast } from "@/hooks/use-toast"
+import { signIn } from "next-auth/react"
+import axios from "axios"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Checkbox } from "@/components/ui/checkbox"
 import { Separator } from "@/components/ui/separator"
 import { Eye, EyeOff, Mail, Lock, User, Github, Chrome, Check, X } from "lucide-react"
+import { useRouter } from "next/navigation"
 
 export function SignupForm() {
   const [showPassword, setShowPassword] = useState(false)
   const [showConfirmPassword, setShowConfirmPassword] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
+  const { toast } = useToast()
+  const router = useRouter()
   const [formData, setFormData] = useState({
-    firstName: "",
-    lastName: "",
+    name: "",
     email: "",
     password: "",
     confirmPassword: "",
     agreeToTerms: false,
-    subscribeNewsletter: false,
   })
 
   const passwordRequirements = [
@@ -34,50 +37,44 @@ export function SignupForm() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     if (formData.password !== formData.confirmPassword) {
-      return // Handle password mismatch
+      return toast({ title: "Error", description: "Passwords do not match", variant: "destructive" })
     }
 
     setIsLoading(true)
 
-    // Simulate signup process
-    await new Promise((resolve) => setTimeout(resolve, 2000))
+    try {
+      const response = await axios.post("/api/register", {
+        name: formData.name,
+        email: formData.email,
+        password: formData.password,
+      })
+
+      if (response.status === 200) {
+        toast({ title: "Success", description: "Account created successfully!" })
+        await signIn("credentials", { ...formData, redirect: false })
+        router.push("/")
+      }
+    } catch (error) {
+      toast({ title: "Error", description: "Something went wrong", variant: "destructive" })
+    }
 
     setIsLoading(false)
-    // Handle successful signup - redirect to verification or dashboard
-  }
-
-  const handleSocialSignup = (provider: string) => {
-    console.log(`Sign up with ${provider}`)
-    // Handle social signup
   }
 
   return (
     <form onSubmit={handleSubmit} className="space-y-4">
       {/* Name Fields */}
-      <div className="grid grid-cols-2 gap-3">
-        <div className="space-y-2">
-          <Label htmlFor="firstName">First Name</Label>
-          <div className="relative">
-            <User className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-            <Input
-              id="firstName"
-              type="text"
-              placeholder="John"
-              value={formData.firstName}
-              onChange={(e) => setFormData((prev) => ({ ...prev, firstName: e.target.value }))}
-              className="pl-10"
-              required
-            />
-          </div>
-        </div>
-        <div className="space-y-2">
-          <Label htmlFor="lastName">Last Name</Label>
+      <div className="space-y-2">
+        <Label htmlFor="name">Full Name</Label>
+        <div className="relative">
+          <User className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
           <Input
-            id="lastName"
+            id="name"
             type="text"
-            placeholder="Doe"
-            value={formData.lastName}
-            onChange={(e) => setFormData((prev) => ({ ...prev, lastName: e.target.value }))}
+            placeholder="John Doe"
+            value={formData.name}
+            onChange={(e) => setFormData((prev) => ({ ...prev, name: e.target.value }))}
+            className="pl-10"
             required
           />
         </div>
@@ -183,16 +180,6 @@ export function SignupForm() {
             </a>
           </Label>
         </div>
-        <div className="flex items-start space-x-2">
-          <Checkbox
-            id="subscribeNewsletter"
-            checked={formData.subscribeNewsletter}
-            onCheckedChange={(checked) => setFormData((prev) => ({ ...prev, subscribeNewsletter: checked as boolean }))}
-          />
-          <Label htmlFor="subscribeNewsletter" className="text-sm leading-relaxed">
-            Subscribe to our newsletter for updates and exclusive offers
-          </Label>
-        </div>
       </div>
 
       {/* Submit Button */}
@@ -221,11 +208,11 @@ export function SignupForm() {
 
       {/* Social Signup */}
       <div className="grid grid-cols-2 gap-3">
-        <Button type="button" variant="outline" onClick={() => handleSocialSignup("google")} className="bg-transparent">
+        <Button type="button" variant="outline" onClick={() => signIn("google")} className="bg-transparent">
           <Chrome className="h-4 w-4 mr-2" />
           Google
         </Button>
-        <Button type="button" variant="outline" onClick={() => handleSocialSignup("github")} className="bg-transparent">
+        <Button type="button" variant="outline" onClick={() => signIn("github")} className="bg-transparent">
           <Github className="h-4 w-4 mr-2" />
           GitHub
         </Button>

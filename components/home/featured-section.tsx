@@ -1,195 +1,141 @@
 "use client"
 
+import Link from "next/link"
+import Image from "next/image"
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
-import { Card, CardContent } from "@/components/ui/card"
-import { CoinDisplay } from "@/components/ui/coin-display"
-import { Heart, Download, Eye, Star, ArrowRight } from "lucide-react"
-import { useCart } from "@/contexts/cart-context"
-import Link from "next/link"
+import { ArrowRight, Sparkles, Star, Download, Code } from "lucide-react"
+
+// Mock data for featured assets
+const featuredAssets = [
+  {
+    id: 1,
+    title: "Abstract Colorful Explosion",
+    category: "Digital Art",
+    imageUrl: "/abstract-colorful-explosion.png",
+    author: "Alex Chen",
+    authorAvatar: "/author-alex-chen.jpg",
+    price: 150,
+    rating: 4.9,
+    downloads: 2300,
+  },
+  {
+    id: 2,
+    title: "Forest Nature Photography",
+    category: "Photography",
+    imageUrl: "/forest-nature-photography.png",
+    author: "Sarah Jenkins",
+    authorAvatar: "/photographer-profile-sarah.jpg",
+    price: 120,
+    rating: 4.8,
+    downloads: 1800,
+  },
+  {
+    id: 3,
+    title: "React Auth Component",
+    category: "Code Snippet",
+    imageUrl: "/neon-cityscape-digital-art.png", // Placeholder for code
+    author: "Marcus Reid",
+    authorAvatar: "/artist-profile-marcus.jpg",
+    price: 250,
+    rating: 5.0,
+    downloads: 4500,
+  },
+]
 
 export function FeaturedSection() {
-  const { addToCart } = useCart()
-
-  const featuredItems = [
-    {
-      id: 1,
-      title: "Neon Cityscape",
-      artist: "Alex Chen",
-      category: "Digital Art",
-      price: 150,
-      originalPrice: 200,
-      rating: 4.9,
-      downloads: 2847,
-      likes: 1205,
-      views: 15420,
-      featured: true,
-      image: "/neon-cityscape-digital-art.png",
-    },
-    {
-      id: 2,
-      title: "Mountain Sunrise",
-      artist: "Sarah Johnson",
-      category: "Photography",
-      price: 120,
-      rating: 4.8,
-      downloads: 1923,
-      likes: 892,
-      views: 12350,
-      image: "/mountain-sunrise-photography.jpg",
-    },
-    {
-      id: 3,
-      title: "Abstract Waves",
-      artist: "Marcus Rivera",
-      category: "Abstract",
-      price: 180,
-      rating: 4.9,
-      downloads: 3156,
-      likes: 1456,
-      views: 18920,
-      image: "/abstract-waves-colorful-art.jpg",
-    },
-    {
-      id: 4,
-      title: "Forest Path",
-      artist: "Emma Wilson",
-      category: "Nature",
-      price: 100,
-      rating: 4.7,
-      downloads: 1654,
-      likes: 743,
-      views: 9870,
-      image: "/forest-path-nature-photography.jpg",
-    },
-  ]
-
-  const handleAddToCart = (item: (typeof featuredItems)[0]) => {
-    addToCart({
-      id: item.id,
-      title: item.title,
-      author: item.artist,
-      image: item.image,
-      price: item.price,
-      originalPrice: item.originalPrice,
-      category: item.category,
-      onSale: !!item.originalPrice,
-    })
-  }
-
   return (
-    <section className="py-20 bg-muted/20">
+    <section className="py-12 sm:py-16 lg:py-24 bg-background">
       <div className="container mx-auto px-4">
-        {/* Section Header */}
-        <div className="text-center mb-16">
-          <Badge variant="outline" className="mb-4">
-            <Star className="h-3 w-3 mr-1" />
-            Featured Collection
-          </Badge>
-          <h2 className="text-3xl lg:text-4xl font-bold mb-4">
-            Handpicked by Our <span className="text-primary">Curators</span>
-          </h2>
-          <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-            Discover the most stunning and popular artworks from our talented community of artists
-          </p>
+        <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-8">
+          <div>
+            <Badge
+              variant="secondary"
+              className="mb-2 w-fit bg-secondary/20 text-secondary border-secondary/30"
+            >
+              <Sparkles className="h-3 w-3 mr-1" />
+              Featured Assets
+            </Badge>
+            <h2 className="text-2xl sm:text-3xl font-bold tracking-tight">Discover Our Top Picks</h2>
+            <p className="text-muted-foreground mt-2 max-w-2xl">Explore a curated selection of our best-selling and most-loved assets from top creators.</p>
+          </div>
+          <Button asChild variant="outline" className="border-secondary/30 hover:bg-secondary/10 mt-4 md:mt-0">
+            <Link href="/gallery">
+              <div className="flex items-center">
+                <span>View All</span>
+                <ArrowRight className="ml-2 h-4 w-4" />
+              </div>
+            </Link>
+          </Button>
         </div>
 
-        {/* Featured Grid */}
-        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
-          {featuredItems.map((item, index) => (
-            <Card key={item.id} className="group hover:shadow-xl transition-all duration-300 overflow-hidden">
-              <div className="relative aspect-[3/4] overflow-hidden">
-                <img
-                  src={item.image || "/placeholder.svg"}
-                  alt={item.title}
-                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
+          {featuredAssets.map((asset) => (
+            <div
+              key={asset.id}
+              className="group relative bg-card border rounded-xl overflow-hidden shadow-sm hover:shadow-lg hover:-translate-y-1 transition-all duration-300"
+            >
+              <Link href={`/products/${asset.id}`} className="absolute inset-0 z-10" legacyBehavior>
+                <span className="sr-only">View {asset.title}</span>
+              </Link>
+
+              {/* Image Container */}
+              <div className="aspect-[4/3] relative overflow-hidden">
+                <Image
+                  src={asset.imageUrl}
+                  alt={asset.title}
+                  fill
+                  className="object-cover group-hover:scale-105 transition-transform duration-500"
                 />
+                {asset.category === "Code Snippet" && (
+                  <div className="absolute inset-0 bg-gray-800/60 flex items-center justify-center">
+                    <Code className="h-16 w-16 text-white/70" />
+                  </div>
+                )}
+                <div className="absolute top-3 right-3 bg-background/80 backdrop-blur-sm rounded-full px-3 py-1 text-xs font-semibold text-foreground">
+                  {asset.category}
+                </div>
+              </div>
 
-                {/* Overlay */}
-                <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+              {/* Content */}
+              <div className="p-4">
+                <h3 className="font-semibold text-lg truncate group-hover:text-primary transition-colors">
+                  {asset.title}
+                </h3>
 
-                {/* Badges */}
-                <div className="absolute top-3 left-3 flex flex-col gap-2">
-                  {item.featured && <Badge className="bg-secondary text-secondary-foreground">Featured</Badge>}
-                  {item.originalPrice && (
-                    <Badge variant="destructive" className="text-xs">
-                      Sale
-                    </Badge>
-                  )}
+                {/* Author Info */}
+                <div className="flex items-center space-x-2 mt-2">
+                  <Image
+                    src={asset.authorAvatar}
+                    alt={asset.author}
+                    width={24}
+                    height={24}
+                    className="rounded-full"
+                  />
+                  <span className="text-sm text-muted-foreground">{asset.author}</span>
                 </div>
 
-                {/* Quick Actions */}
-                <div className="absolute top-3 right-3 flex flex-col gap-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                  <Button size="sm" variant="secondary" className="h-8 w-8 p-0">
-                    <Heart className="h-4 w-4" />
-                  </Button>
-                  <Button size="sm" variant="secondary" className="h-8 w-8 p-0">
-                    <Eye className="h-4 w-4" />
-                  </Button>
-                </div>
-
-                {/* Stats Overlay */}
-                <div className="absolute bottom-3 left-3 right-3 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                  <div className="flex items-center justify-between text-white text-xs">
-                    <div className="flex items-center space-x-3">
-                      <div className="flex items-center space-x-1">
-                        <Download className="h-3 w-3" />
-                        <span>{item.downloads.toLocaleString()}</span>
-                      </div>
-                      <div className="flex items-center space-x-1">
-                        <Heart className="h-3 w-3" />
-                        <span>{item.likes.toLocaleString()}</span>
-                      </div>
-                    </div>
-                    <div className="flex items-center space-x-1">
-                      <Star className="h-3 w-3 fill-current text-yellow-400" />
-                      <span>{item.rating}</span>
-                    </div>
+                {/* Stats */}
+                <div className="flex items-center justify-between mt-4 text-sm text-muted-foreground">
+                  <div className="flex items-center space-x-1">
+                    <Star className="h-4 w-4 text-yellow-500 fill-current" />
+                    <span>{asset.rating.toFixed(1)}</span>
+                  </div>
+                  <div className="flex items-center space-x-1">
+                    <Download className="h-4 w-4" />
+                    <span>{(asset.downloads / 1000).toFixed(1)}k</span>
                   </div>
                 </div>
               </div>
 
-              <CardContent className="p-4">
-                <div className="space-y-3">
-                  <div>
-                    <h3 className="font-semibold text-lg group-hover:text-primary transition-colors">{item.title}</h3>
-                    <p className="text-sm text-muted-foreground">by {item.artist}</p>
-                  </div>
-
-                  <div className="flex items-center justify-between">
-                    <Badge variant="outline" className="text-xs">
-                      {item.category}
-                    </Badge>
-                    <div className="flex items-center space-x-2">
-                      {item.originalPrice && (
-                        <CoinDisplay
-                          amount={item.originalPrice}
-                          size="sm"
-                          className="line-through text-muted-foreground"
-                        />
-                      )}
-                      <CoinDisplay amount={item.price} size="sm" />
-                    </div>
-                  </div>
-
-                  <Button className="w-full group/btn" onClick={() => handleAddToCart(item)}>
-                    Add to Cart
-                    <ArrowRight className="ml-2 h-4 w-4 group-hover/btn:translate-x-1 transition-transform" />
-                  </Button>
-                </div>
-              </CardContent>
-            </Card>
+              {/* Price Overlay */}
+              <div className="absolute bottom-4 right-4 z-20">
+                <Button size="sm" className="shadow-lg">
+                  ${asset.price}
+                </Button>
+              </div>
+            </div>
           ))}
-        </div>
-
-        {/* View All Button */}
-        <div className="text-center">
-          <Button variant="outline" size="lg" className="group bg-transparent" asChild>
-            <Link href="/gallery">
-              View All Featured
-              <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
-            </Link>
-          </Button>
         </div>
       </div>
     </section>
