@@ -28,17 +28,19 @@ export function Header() {
         <div className="container mx-auto px-4">
           <div className="flex h-16 items-center justify-between">
             <Link href="/" className="flex items-center space-x-3">
-              <div className="relative h-10 w-10">
-                <Image
-                  src="/logo.jpg"
-                  alt="CodeSnapGC Logo"
-                  fill
-                  className="object-contain"
-                />
-              </div>
-              <span className="font-bold text-xl bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">
-                CodeSnapGC
-              </span>
+              <>
+                <div className="relative h-10 w-10">
+                  <Image
+                    src="/logo.jpg"
+                    alt="CodeSnapGC Logo"
+                    fill
+                    className="object-contain"
+                  />
+                </div>
+                <span className="font-bold text-xl bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">
+                  CodeSnapGC
+                </span>
+              </>
             </Link>
 
             {/* Desktop Navigation */}
@@ -85,12 +87,14 @@ export function Header() {
                   asChild
                 >
                   <Link href="/cart">
-                    <ShoppingCart className="h-4 w-4" />
-                    {state.itemCount > 0 && (
-                      <Badge className="absolute -top-1 -right-1 h-5 w-5 flex items-center justify-center p-0 text-xs bg-secondary text-secondary-foreground">
-                        {state.itemCount}
-                      </Badge>
-                    )}
+                    <>
+                      <ShoppingCart className="h-4 w-4" />
+                      {state.itemCount > 0 && (
+                        <Badge className="absolute -top-1 -right-1 h-5 w-5 flex items-center justify-center p-0 text-xs bg-secondary text-secondary-foreground">
+                          {state.itemCount}
+                        </Badge>
+                      )}
+                    </>
                   </Link>
                 </Button>
               </div>

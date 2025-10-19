@@ -30,8 +30,10 @@ export default function CartPage() {
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Button asChild size="lg">
                 <Link href="/gallery" legacyBehavior>
-                  <ShoppingBag className="h-4 w-4 mr-2" />
-                  Browse Gallery
+                  <>
+                    <ShoppingBag className="h-4 w-4 mr-2" />
+                    Browse Gallery
+                  </>
                 </Link>
               </Button>
               <Button variant="outline" size="lg" asChild>
@@ -158,8 +160,10 @@ export default function CartPage() {
                     </div>
                     <Button variant="outline" asChild>
                       <Link href="/gallery" legacyBehavior>
-                        Browse More
-                        <ArrowRight className="ml-2 h-4 w-4" />
+                        <>
+                          Browse More
+                          <ArrowRight className="ml-2 h-4 w-4" />
+                        </>
                       </Link>
                     </Button>
                   </div>
@@ -192,8 +196,10 @@ export default function CartPage() {
 
                   <Button asChild size="lg" className="w-full">
                     <Link href="/checkout" legacyBehavior>
-                      Proceed to Checkout
-                      <ArrowRight className="ml-2 h-4 w-4" />
+                      <>
+                        Proceed to Checkout
+                        <ArrowRight className="ml-2 h-4 w-4" />
+                      </>
                     </Link>
                   </Button>
 

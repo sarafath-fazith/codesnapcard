@@ -55,12 +55,14 @@ export function Footer() {
           {/* Brand Section */}
           <div className="lg:col-span-2">
             <Link href="/" className="flex items-center space-x-3 mb-4">
-              <div className="relative h-8 w-8">
-                <Image src="/logo.jpg" alt="CodeSnapGC Logo" fill className="object-contain" />
-              </div>
-              <span className="font-bold text-xl bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">
-                CodeSnapGC
-              </span>
+              <>
+                <div className="relative h-8 w-8">
+                  <Image src="/logo.jpg" alt="CodeSnapGC Logo" fill className="object-contain" />
+                </div>
+                <span className="font-bold text-xl bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">
+                  CodeSnapGC
+                </span>
+              </>
             </Link>
             <p className="text-muted-foreground text-sm mb-6 max-w-sm">
               Discover and purchase premium digital assets, code snippets, and development resources from talented

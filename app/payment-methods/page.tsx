@@ -8,10 +8,9 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
-import { CoinDisplay } from "@/components/ui/coin-display"
 import { Header } from "@/components/layout/header"
 import { Footer } from "@/components/layout/footer"
-import { CreditCard, Wallet, Plus, Edit, Trash2, Shield, Star, Gift, Banknote, Smartphone } from "lucide-react"
+import { CreditCard, Wallet, Plus, Edit, Trash2, Shield, Star, Gift, Banknote, Smartphone, Gamepad2 } from "lucide-react"
 
 interface PaymentMethod {
   id: string
@@ -21,6 +20,13 @@ interface PaymentMethod {
   isDefault: boolean
   lastUsed?: string
   icon: React.ReactNode
+}
+
+interface GiftCard {
+  id: string
+  name: string
+  logo: React.ReactNode
+  price: number
 }
 
 export default function PaymentMethodsPage() {
@@ -45,8 +51,13 @@ export default function PaymentMethodsPage() {
     },
   ])
 
+  const giftCards: GiftCard[] = [
+    { id: "1", name: "Binance", logo: <img src="https://img.icons8.com/color/48/binance.png" alt="Binance Logo" className="h-12 w-12 object-contain" />, price: 1000 },
+    { id: "2", name: "Razer Gold", logo: <img src="https://img.icons8.com/color/48/razer.png" alt="Razer Gold Logo" className="h-12 w-12 object-contain" />, price: 500 },
+    { id: "3", name: "PlayStation", logo: <Gamepad2 className="h-12 w-12 text-blue-500" />, price: 1500 },
+  ];
+
   const [showAddForm, setShowAddForm] = useState(false)
-  const [coinBalance] = useState(2450)
 
   const setAsDefault = (id: string) => {
     setPaymentMethods((methods) =>
@@ -68,49 +79,27 @@ export default function PaymentMethodsPage() {
         <div className="max-w-4xl mx-auto">
           <div className="mb-8">
             <h1 className="text-3xl font-bold mb-2">Payment Methods</h1>
-            <p className="text-muted-foreground">Manage your payment methods and coin balance</p>
+            <p className="text-muted-foreground">Manage your payment methods and purchase gift cards</p>
           </div>
 
           <div className="grid lg:grid-cols-3 gap-8">
-            {/* Payment Methods */}
             <div className="lg:col-span-2 space-y-6">
-              {/* Coin Balance */}
-              <Card className="bg-gradient-to-r from-primary/10 to-secondary/10 border-primary/20">
+              <Card>
                 <CardHeader>
-                  <CardTitle className="flex items-center space-x-2">
-                    <Wallet className="h-5 w-5 text-primary" />
-                    <span>CodeSnapGC Coin Balance</span>
-                  </CardTitle>
+                  <CardTitle>Buy Gift Cards & Vouchers</CardTitle>
                 </CardHeader>
-                <CardContent>
-                  <div className="flex items-center justify-between mb-4">
-                    <div>
-                      <CoinDisplay amount={coinBalance} size="xl" />
-                      <p className="text-sm text-muted-foreground mt-1">Available for purchases</p>
-                    </div>
-                    <Button>
-                      <Plus className="h-4 w-4 mr-2" />
-                      Buy More Coins
-                    </Button>
-                  </div>
-                  <div className="grid grid-cols-3 gap-4 text-center">
-                    <div className="p-3 bg-background/50 rounded-lg">
-                      <div className="text-sm font-medium">This Month</div>
-                      <CoinDisplay amount={450} size="sm" className="text-muted-foreground" />
-                    </div>
-                    <div className="p-3 bg-background/50 rounded-lg">
-                      <div className="text-sm font-medium">Total Earned</div>
-                      <CoinDisplay amount={1200} size="sm" className="text-muted-foreground" />
-                    </div>
-                    <div className="p-3 bg-background/50 rounded-lg">
-                      <div className="text-sm font-medium">Total Spent</div>
-                      <CoinDisplay amount={3800} size="sm" className="text-muted-foreground" />
-                    </div>
-                  </div>
+                <CardContent className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                  {giftCards.map((card) => (
+                    <Card key={card.id} className="flex flex-col items-center justify-between p-4">
+                      <div className="mb-4">{card.logo}</div>
+                      <h3 className="text-lg font-semibold">{card.name}</h3>
+                      <p className="text-muted-foreground">₹{card.price.toLocaleString()}</p>
+                      <Button className="mt-4 w-full">Buy Now</Button>
+                    </Card>
+                  ))}
                 </CardContent>
               </Card>
 
-              {/* Saved Payment Methods */}
               <Card>
                 <CardHeader className="flex flex-row items-center justify-between">
                   <CardTitle>Saved Payment Methods</CardTitle>
@@ -160,7 +149,6 @@ export default function PaymentMethodsPage() {
                     </div>
                   ))}
 
-                  {/* Add Payment Method Form */}
                   {showAddForm && (
                     <Card className="bg-muted/30">
                       <CardHeader>
@@ -214,7 +202,6 @@ export default function PaymentMethodsPage() {
               </Card>
             </div>
 
-            {/* Quick Actions */}
             <div className="lg:col-span-1 space-y-6">
               <Card>
                 <CardHeader>
@@ -227,7 +214,7 @@ export default function PaymentMethodsPage() {
                   </Button>
                   <Button variant="outline" className="w-full justify-start bg-transparent">
                     <Star className="h-4 w-4 mr-2" />
-                    Earn Free Coins
+                    View Purchase History
                   </Button>
                   <Button variant="outline" className="w-full justify-start bg-transparent">
                     <Shield className="h-4 w-4 mr-2" />
