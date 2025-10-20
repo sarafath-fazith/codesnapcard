@@ -1,5 +1,3 @@
-import { Header } from "@/components/layout/header"
-import { Footer } from "@/components/layout/footer"
 import { ProductsHeader } from "@/components/products/products-header"
 import { ProductsFilters } from "@/components/products/products-filters"
 import { ProductsGrid } from "@/components/products/products-grid"
@@ -8,7 +6,6 @@ import { ProductsPagination } from "@/components/products/products-pagination"
 export default function ProductsPage() {
   return (
     <div className="min-h-screen bg-background">
-      <Header />
       <main>
         <ProductsHeader />
         <div className="container mx-auto px-4 py-8">
@@ -23,7 +20,6 @@ export default function ProductsPage() {
           </div>
         </div>
       </main>
-      <Footer />
     </div>
   )
 }

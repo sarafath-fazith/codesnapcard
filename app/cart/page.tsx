@@ -1,4 +1,4 @@
-"use client"
+'use client'
 
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
@@ -8,8 +8,7 @@ import { Separator } from "@/components/ui/separator"
 import { useCart } from "@/contexts/cart-context"
 import { ShoppingCart, Trash2, Plus, Minus, ArrowRight, ShoppingBag, Heart } from "lucide-react"
 import Link from "next/link"
-import { Header } from "@/components/layout/header"
-import { Footer } from "@/components/layout/footer"
+import Image from 'next/image';
 
 export default function CartPage() {
   const { state, updateQuantity, removeFromCart, clearCart } = useCart()
@@ -17,7 +16,6 @@ export default function CartPage() {
   if (state.items.length === 0) {
     return (
       <div className="min-h-screen bg-background">
-        <Header />
         <div className="container mx-auto px-4 py-16">
           <div className="max-w-2xl mx-auto text-center">
             <div className="w-24 h-24 bg-muted rounded-full flex items-center justify-center mx-auto mb-6">
@@ -29,11 +27,9 @@ export default function CartPage() {
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Button asChild size="lg">
-                <Link href="/gallery" legacyBehavior>
-                  <>
-                    <ShoppingBag className="h-4 w-4 mr-2" />
-                    Browse Gallery
-                  </>
+                <Link href="/gallery">
+                  <ShoppingBag className="h-4 w-4 mr-2" />
+                  Browse Gallery
                 </Link>
               </Button>
               <Button variant="outline" size="lg" asChild>
@@ -42,14 +38,12 @@ export default function CartPage() {
             </div>
           </div>
         </div>
-        <Footer />
       </div>
     );
   }
 
   return (
     <div className="min-h-screen bg-background">
-      <Header />
       <div className="container mx-auto px-4 py-8">
         <div className="max-w-6xl mx-auto">
           <div className="mb-8">
@@ -82,10 +76,11 @@ export default function CartPage() {
                     <div key={item.id}>
                       <div className="flex space-x-4">
                         <div className="relative w-20 h-20 rounded-lg overflow-hidden flex-shrink-0">
-                          <img
+                          <Image
                             src={item.image || "/placeholder.svg"}
                             alt={item.title}
-                            className="w-full h-full object-cover"
+                            layout="fill"
+                            objectFit="cover"
                           />
                           {item.onSale && (
                             <div className="absolute top-1 left-1">
@@ -159,11 +154,9 @@ export default function CartPage() {
                       <p className="text-sm text-muted-foreground">Discover more amazing digital assets</p>
                     </div>
                     <Button variant="outline" asChild>
-                      <Link href="/gallery" legacyBehavior>
-                        <>
-                          Browse More
-                          <ArrowRight className="ml-2 h-4 w-4" />
-                        </>
+                      <Link href="/gallery">
+                        Browse More
+                        <ArrowRight className="ml-2 h-4 w-4" />
                       </Link>
                     </Button>
                   </div>
@@ -195,11 +188,9 @@ export default function CartPage() {
                   </div>
 
                   <Button asChild size="lg" className="w-full">
-                    <Link href="/checkout" legacyBehavior>
-                      <>
-                        Proceed to Checkout
-                        <ArrowRight className="ml-2 h-4 w-4" />
-                      </>
+                    <Link href="/checkout">
+                      Proceed to Checkout
+                      <ArrowRight className="ml-2 h-4 w-4" />
                     </Link>
                   </Button>
 
@@ -215,7 +206,6 @@ export default function CartPage() {
           </div>
         </div>
       </div>
-      <Footer />
     </div>
   );
 }

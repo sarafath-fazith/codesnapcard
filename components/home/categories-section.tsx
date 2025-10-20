@@ -67,7 +67,7 @@ export function CategoriesSection() {
             Browse by <span className="text-primary">Category</span>
           </h2>
           <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-            Find exactly what you're looking for in our carefully organized collections
+            Find exactly what you&apos;re looking for in our carefully organized collections
           </p>
         </div>
 

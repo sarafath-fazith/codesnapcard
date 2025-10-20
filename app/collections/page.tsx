@@ -1,5 +1,3 @@
-import { Header } from "@/components/layout/header"
-import { Footer } from "@/components/layout/footer"
 import { CollectionsHeader } from "@/components/collections/collections-header"
 import { CollectionsGrid } from "@/components/collections/collections-grid"
 import { FeaturedCollections } from "@/components/collections/featured-collections"
@@ -7,7 +5,6 @@ import { FeaturedCollections } from "@/components/collections/featured-collectio
 export default function CollectionsPage() {
   return (
     <div className="min-h-screen bg-background">
-      <Header />
       <main>
         <CollectionsHeader />
         <FeaturedCollections />
@@ -15,7 +12,6 @@ export default function CollectionsPage() {
           <CollectionsGrid />
         </div>
       </main>
-      <Footer />
     </div>
   )
 }

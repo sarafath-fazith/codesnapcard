@@ -116,13 +116,13 @@ export function TrendingSection() {
         <div className="text-center mb-16">
           <Badge variant="outline" className="mb-4">
             <TrendingUp className="h-3 w-3 mr-1" />
-            What's Hot
+            What&apos;s Hot
           </Badge>
           <h2 className="text-3xl lg:text-4xl font-bold mb-4">
             <span className="text-secondary">Trending</span> Right Now
           </h2>
           <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-            See what's capturing everyone's attention and climbing the charts
+            See what&apos;s capturing everyone&apos;s attention and climbing the charts
           </p>
         </div>
 

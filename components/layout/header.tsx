@@ -1,4 +1,4 @@
-"use client"
+'use client'
 
 import { useState } from "react"
 import Link from "next/link"
@@ -18,8 +18,8 @@ export function Header() {
 
   const navigation = [
     { name: "Products", href: "/products" },
-    { name: "Collections", href: "/collections" },
-    { name: "Artists", href: "/author/1" },
+    { name: "My Collection", href: "/my-collection" },
+    { name: "Gift Cards", href: "/gift-cards" },
   ]
 
   return (

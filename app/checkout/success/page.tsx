@@ -4,6 +4,7 @@ import { Badge } from "@/components/ui/badge"
 import { CoinDisplay } from "@/components/ui/coin-display"
 import { CheckCircle, Download, Share2, Star, ArrowRight, Home, Gift, BookOpen, Code, GraduationCap } from "lucide-react"
 import Link from "next/link"
+import Image from 'next/image';
 
 export default function CheckoutSuccessPage() {
   // Mock purchase data
@@ -94,11 +95,12 @@ export default function CheckoutSuccessPage() {
               <div className="space-y-4 mb-6">
                 {purchase.items.map((item) => (
                   <div key={item.id} className="flex items-center space-x-4 p-4 bg-muted/30 rounded-lg">
-                    <div className="w-16 h-16 rounded-md overflow-hidden flex-shrink-0">
-                      <img
+                    <div className="w-16 h-16 rounded-md overflow-hidden flex-shrink-0 relative">
+                      <Image
                         src={item.image || "/placeholder.svg"}
                         alt={item.title}
-                        className="w-full h-full object-cover"
+                        layout="fill"
+                        objectFit="cover"
                       />
                     </div>
 
@@ -185,7 +187,7 @@ export default function CheckoutSuccessPage() {
           {/* Next Steps */}
           <Card className="bg-primary/5 border-primary/20">
             <CardContent className="pt-6">
-              <h3 className="font-medium mb-3">What's Next?</h3>
+              <h3 className="font-medium mb-3">What&apos;s Next?</h3>
               <div className="space-y-2 text-sm text-muted-foreground mb-4">
                 <p>• Your downloads are available immediately and forever</p>
                 <p>• Check your email for purchase receipt and download links</p>

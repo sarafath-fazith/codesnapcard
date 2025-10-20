@@ -3,8 +3,11 @@ import type { Metadata } from "next"
 import { Nunito, Space_Grotesk } from "next/font/google"
 import { Suspense } from "react"
 import { CartProvider } from "@/contexts/cart-context"
+import { UserProvider } from "@/contexts/user-context"
 import Provider from "./provider"
 import "./globals.css"
+import { Header } from "@/components/layout/header"
+import { Footer } from "@/components/layout/footer"
 
 const nunito = Nunito({
   subsets: ["latin"],
@@ -34,9 +37,17 @@ export default function RootLayout({
     <html lang="en">
       <body className={`font-sans ${nunito.variable} ${spaceGrotesk.variable} antialiased`}>
         <Provider>
-          <CartProvider>
-            <Suspense fallback={null}>{children}</Suspense>
-          </CartProvider>
+          <UserProvider>
+            <CartProvider>
+              <div className="flex flex-col min-h-screen">
+                <Header />
+                <main className="flex-grow">
+                  <Suspense fallback={null}>{children}</Suspense>
+                </main>
+                <Footer />
+              </div>
+            </CartProvider>
+          </UserProvider>
         </Provider>
       </body>
     </html>

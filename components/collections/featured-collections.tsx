@@ -71,7 +71,7 @@ export function FeaturedCollections() {
         <div className="text-center mb-12">
           <Badge variant="outline" className="mb-4">
             <Crown className="h-3 w-3 mr-1" />
-            Editor's Choice
+            Editor&apos;s Choice
           </Badge>
           <h2 className="text-3xl lg:text-4xl font-bold mb-4">
             Featured <span className="text-secondary">Collections</span>
