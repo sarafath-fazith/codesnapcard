@@ -3,6 +3,7 @@ import { FeaturedSection } from "@/components/home/featured-section"
 import { CategoriesSection } from "@/components/home/categories-section"
 import { TrendingSection } from "@/components/home/trending-section"
 import { StatsSection } from "@/components/home/stats-section"
+import { GiftCardSection } from "@/components/home/gift-card-section"
 
 export default function HomePage() {
   return (
@@ -12,6 +13,7 @@ export default function HomePage() {
         <FeaturedSection />
         <CategoriesSection />
         <TrendingSection />
+        <GiftCardSection />
         <StatsSection />
       </main>
     </div>

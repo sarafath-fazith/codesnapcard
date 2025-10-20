@@ -207,7 +207,7 @@ export function TrendingSection() {
                           </div>
                         </div>
 
-                        <Button className="w-full">Purchase Now</Button>
+                        <Button className="w-full">Claim Now</Button>
                       </div>
                     </CardContent>
                   </Card>

@@ -7,12 +7,10 @@ import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
 import { Menu, X, Search, ShoppingCart, User, Coins } from "lucide-react"
 import { useCart } from "@/contexts/cart-context"
-import { AuthModal } from "@/components/auth/auth-modal"
 import { UserNav } from "@/components/layout/user-nav"
 
 export function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
-  const [isAuthModalOpen, setIsAuthModalOpen] = useState(false)
   const [userCoins] = useState(1250) // Mock user coins
   const { state } = useCart()
 
@@ -49,7 +47,7 @@ export function Header() {
                 <Link
                   key={item.name}
                   href={item.href}
-                  className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors"
+                  className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors nav-link"
                 >
                   {item.name}
                 </Link>
@@ -164,12 +162,11 @@ export function Header() {
                     <Button
                       variant="ghost"
                       size="sm"
-                      onClick={() => {
-                        setIsMenuOpen(false)
-                        setIsAuthModalOpen(true)
-                      }}
+                      asChild
                     >
-                      <User className="h-4 w-4" />
+                      <Link href="/auth">
+                        <User className="h-4 w-4" />
+                      </Link>
                     </Button>
                   </div>
                 </div>
@@ -178,7 +175,6 @@ export function Header() {
           )}
         </div>
       </header>
-      <AuthModal open={isAuthModalOpen} onOpenChange={setIsAuthModalOpen} />
     </>
   )
 }

@@ -6,15 +6,16 @@ import { useCart } from '@/contexts/cart-context'
 import Image from 'next/image'
 
 const giftCardOptions = [
-  { id: 'gc-25', name: '_25 Gift Card', price: 25.0, image: '/gift-card-blue.jpg' },
-  { id: 'gc-50', name: '_50 Gift Card', price: 50.0, image: '/gift-card-green.jpg' },
-  { id: 'gc-100', name: '_100 Gift Card', price: 100.0, image: '/gift-card-gold.jpg' },
+  { id: 'gc-25', name: '_25 Gift Card', price: 25.0, image: '/gift-card-blue.jpg', type: 'Digital Gift Card' },
+  { id: 'gc-50', name: '_50 Gift Card', price: 50.0, image: '/gift-card-green.jpg', type: 'Digital Gift Card' },
+  { id: 'gc-100', name: '_100 Gift Card', price: 100.0, image: '/gift-card-gold.jpg', type: 'Digital Gift Card' },
+  { id: 'bnb-50', name: 'Binance Coin', price: 50.0, image: '/binance-coin.jpg', type: 'Digital Currency' },
 ]
 
 export function GiftCardPurchaseOptions() {
   const { dispatch } = useCart()
 
-  const handleAddToCart = (item: any) => {
+  const handlePayNow = (item: any) => {
     dispatch({ type: 'ADD_ITEM', payload: { ...item, type: 'GIFT_CARD' } })
   }
 
@@ -24,7 +25,7 @@ export function GiftCardPurchaseOptions() {
         <CardTitle>Purchase a Gift Card</CardTitle>
       </CardHeader>
       <CardContent>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6">
           {giftCardOptions.map((option) => (
             <Card key={option.id}>
               <div className="relative h-40 w-full">
@@ -36,11 +37,11 @@ export function GiftCardPurchaseOptions() {
                 />
               </div>
               <div className="p-4">
-                <h3 className="font-semibold text-lg">{option.name.replace('_', '$')}</h3>
-                <p className="text-muted-foreground">Digital Gift Card</p>
+                <h3 className="font-semibold text-lg">{option.name.startsWith('_') ? option.name.replace('_', '₹') : option.name}</h3>
+                <p className="text-muted-foreground">{option.type}</p>
                 <div className="flex items-center justify-between mt-4">
-                  <span className="font-bold text-xl">${option.price.toFixed(2)}</span>
-                  <Button onClick={() => handleAddToCart(option)}>Add to Cart</Button>
+                  <span className="font-bold text-xl">₹{option.price.toFixed(2)}</span>
+                  <Button onClick={() => handlePayNow(option)}>Pay Now</Button>
                 </div>
               </div>
             </Card>

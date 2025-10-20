@@ -1,4 +1,4 @@
-"use client"
+'use client'
 
 import {
   DropdownMenu,
@@ -11,13 +11,11 @@ import {
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Button } from "@/components/ui/button"
 import { signOut, useSession } from "next-auth/react"
-import { LogIn, LogOut, User } from "lucide-react"
-import { AuthModal } from "@/components/auth/auth-modal"
-import { useState } from "react"
+import { LogIn, LogOut } from "lucide-react"
+import Link from "next/link"
 
 export function UserNav() {
   const { data: session } = useSession()
-  const [isAuthModalOpen, setIsAuthModalOpen] = useState(false)
 
   if (session) {
     return (
@@ -48,11 +46,10 @@ export function UserNav() {
   }
 
   return (
-    <>
-      <Button variant="ghost" size="sm" className="hover:bg-secondary/10" onClick={() => setIsAuthModalOpen(true)}>
+    <Link href="/auth">
+      <Button variant="ghost" size="sm" className="hover:bg-secondary/10">
         <LogIn className="h-4 w-4" />
       </Button>
-      <AuthModal open={isAuthModalOpen} onOpenChange={setIsAuthModalOpen} />
-    </>
+    </Link>
   )
 }

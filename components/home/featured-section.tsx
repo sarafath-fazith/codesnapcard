@@ -131,7 +131,7 @@ export function FeaturedSection() {
               {/* Price Overlay */}
               <div className="absolute bottom-4 right-4 z-20">
                 <Button size="sm" className="shadow-lg">
-                  ${asset.price}
+                  Claim Now
                 </Button>
               </div>
             </div>
