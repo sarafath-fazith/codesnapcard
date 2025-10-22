@@ -9,8 +9,7 @@ import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Checkbox } from "@/components/ui/checkbox"
-import { Separator } from "@/components/ui/separator"
-import { Eye, EyeOff, Mail, Lock, Github, Chrome } from "lucide-react"
+import { Eye, EyeOff, Mail, Lock } from "lucide-react"
 import Link from "next/link"
 import { useToast } from "@/hooks/use-toast"
 
@@ -118,26 +117,6 @@ export function LoginForm() {
           "Sign In"
         )}
       </Button>
-
-      {/* Divider */}
-      <div className="relative">
-        <Separator />
-        <div className="absolute inset-0 flex items-center justify-center">
-          <span className="bg-background px-2 text-xs text-muted-foreground">Or continue with</span>
-        </div>
-      </div>
-
-      {/* Social Login */}
-      <div className="grid grid-cols-2 gap-3">
-        <Button type="button" variant="outline" onClick={() => signIn("google")} className="bg-transparent">
-          <Chrome className="h-4 w-4 mr-2" />
-          Google
-        </Button>
-        <Button type="button" variant="outline" onClick={() => signIn("github")} className="bg-transparent">
-          <Github className="h-4 w-4 mr-2" />
-          GitHub
-        </Button>
-      </div>
     </form>
   )
 }

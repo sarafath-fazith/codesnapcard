@@ -9,8 +9,7 @@ import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Checkbox } from "@/components/ui/checkbox"
-import { Separator } from "@/components/ui/separator"
-import { Eye, EyeOff, Mail, Lock, User, Github, Chrome, Check, X } from "lucide-react"
+import { Eye, EyeOff, Mail, Lock, User, Check, X } from "lucide-react"
 import { useRouter } from "next/navigation"
 
 export function SignupForm() {
@@ -43,15 +42,19 @@ export function SignupForm() {
     setIsLoading(true)
 
     try {
-      const response = await axios.post("/api/register", {
-        name: formData.name,
-        email: formData.email,
+      const response = await axios.post("http://13.235.128.128:8080/api/signup", {
+        fullname: formData.name,
+        emailID: formData.email,
         password: formData.password,
       })
 
-      if (response.status === 200) {
+      if (response.status === 200 || response.status === 201) {
         toast({ title: "Success", description: "Account created successfully!" })
-        await signIn("credentials", { ...formData, redirect: false })
+        await signIn("credentials", {
+          email: formData.email,
+          password: formData.password,
+          redirect: false,
+        })
         router.push("/")
       }
     } catch (error) {
@@ -197,26 +200,6 @@ export function SignupForm() {
           "Create Account"
         )}
       </Button>
-
-      {/* Divider */}
-      <div className="relative">
-        <Separator />
-        <div className="absolute inset-0 flex items-center justify-center">
-          <span className="bg-background px-2 text-xs text-muted-foreground">Or sign up with</span>
-        </div>
-      </div>
-
-      {/* Social Signup */}
-      <div className="grid grid-cols-2 gap-3">
-        <Button type="button" variant="outline" onClick={() => signIn("google")} className="bg-transparent">
-          <Chrome className="h-4 w-4 mr-2" />
-          Google
-        </Button>
-        <Button type="button" variant="outline" onClick={() => signIn("github")} className="bg-transparent">
-          <Github className="h-4 w-4 mr-2" />
-          GitHub
-        </Button>
-      </div>
     </form>
   )
 }
