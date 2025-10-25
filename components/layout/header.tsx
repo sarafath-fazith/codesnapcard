@@ -2,12 +2,12 @@
 
 import { useState } from "react"
 import Link from "next/link"
-import Image from "next/image"
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
 import { Menu, X, Search, ShoppingCart, User, Coins } from "lucide-react"
 import { useCart } from "@/contexts/cart-context"
 import { UserNav } from "@/components/layout/user-nav"
+import Image from "next/image"
 
 export function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
@@ -31,7 +31,8 @@ export function Header() {
                   <Image
                     src="/logo.jpg"
                     alt="CodeSnapGC Logo"
-                    fill
+                    width={40}
+                    height={40}
                     className="object-contain"
                   />
                 </div>

@@ -1,6 +1,7 @@
 "use client"
 
 import type React from "react"
+import Image from "next/image"
 
 import { useState } from "react"
 import { Button } from "@/components/ui/button"
@@ -50,8 +51,8 @@ export default function PaymentMethodsPage() {
   ])
 
   const giftCards: GiftCard[] = [
-    { id: "1", name: "Binance", logo: <img src="https://img.icons8.com/color/48/binance.png" alt="Binance Logo" className="h-12 w-12 object-contain" />, price: 1000 },
-    { id: "2", name: "Razer Gold", logo: <img src="https://img.icons8.com/color/48/razer.png" alt="Razer Gold Logo" className="h-12 w-12 object-contain" />, price: 500 },
+    { id: "1", name: "Binance", logo: <Image width={48} height={48} src="https://img.icons8.com/color/48/binance.png" alt="Binance Logo" className="h-12 w-12 object-contain" />, price: 1000 },
+    { id: "2", name: "Razer Gold", logo: <Image width={48} height={48} src="https://img.icons8.com/color/48/razer.png" alt="Razer Gold Logo" className="h-12 w-12 object-contain" />, price: 500 },
     { id: "3", name: "PlayStation", logo: <Gamepad2 className="h-12 w-12 text-blue-500" />, price: 1500 },
   ];
 

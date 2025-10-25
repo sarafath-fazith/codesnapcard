@@ -4,6 +4,7 @@ import { Card, CardContent } from "@/components/ui/card"
 import { CoinDisplay } from "@/components/ui/coin-display"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Heart, ImageIcon, Users, Star, ArrowRight, Bookmark } from "lucide-react"
+import Image from "next/image"
 
 export function CollectionsGrid() {
   const collections = [
@@ -116,9 +117,11 @@ export function CollectionsGrid() {
           <Card key={collection.id} className="group hover:shadow-lg transition-all duration-300 overflow-hidden">
             {/* Cover Image */}
             <div className="relative aspect-[4/3] overflow-hidden">
-              <img
+              <Image
                 src={collection.coverImage || "/placeholder.svg"}
                 alt={collection.title}
+                width={800}
+                height={600}
                 className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
               />
 
@@ -144,7 +147,7 @@ export function CollectionsGrid() {
                 <div className="flex items-center space-x-2">
                   {collection.previewImages.map((image, index) => (
                     <div key={index} className="w-10 h-10 rounded-md overflow-hidden border border-white/50">
-                      <img src={image || "/placeholder.svg"} alt="" className="w-full h-full object-cover" />
+                      <Image width={40} height={40} src={image || "/placeholder.svg"} alt="" className="w-full h-full object-cover" />
                     </div>
                   ))}
                   <div className="text-white text-xs">+{collection.artworkCount - 3}</div>

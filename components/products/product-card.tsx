@@ -45,7 +45,8 @@ export function ProductCard({ product }: ProductCardProps) {
           <Image
             src={product.image}
             alt={product.name}
-            fill
+            width={400}
+            height={400}
             className="object-cover"
           />
           <Badge className="absolute top-2 right-2 bg-secondary text-secondary-foreground">

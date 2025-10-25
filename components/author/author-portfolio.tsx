@@ -6,6 +6,7 @@ import { Badge } from "@/components/ui/badge"
 import { Card, CardContent } from "@/components/ui/card"
 import { CoinDisplay } from "@/components/ui/coin-display"
 import { Heart, Download, Eye, Filter, Grid3X3, List, Star, ShoppingCart } from "lucide-react"
+import Image from "next/image"
 
 interface AuthorPortfolioProps {
   authorId: string
@@ -166,9 +167,11 @@ export function AuthorPortfolio({ authorId }: AuthorPortfolioProps) {
               <>
                 {/* Grid View */}
                 <div className="relative aspect-[4/3] overflow-hidden">
-                  <img
+                  <Image
                     src={artwork.image || "/placeholder.svg"}
                     alt={artwork.title}
+                    width={800}
+                    height={600}
                     className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
                   />
 
@@ -245,9 +248,11 @@ export function AuthorPortfolio({ authorId }: AuthorPortfolioProps) {
               (<CardContent className="p-4">
                 <div className="flex items-center space-x-4">
                   <div className="relative w-20 h-20 rounded-md overflow-hidden flex-shrink-0">
-                    <img
+                    <Image
                       src={artwork.image || "/placeholder.svg"}
                       alt={artwork.title}
+                      width={200}
+                      height={200}
                       className="w-full h-full object-cover"
                     />
                   </div>

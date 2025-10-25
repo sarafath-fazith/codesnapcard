@@ -3,6 +3,7 @@ import { Badge } from "@/components/ui/badge"
 import { Card, CardContent } from "@/components/ui/card"
 import { CoinDisplay } from "@/components/ui/coin-display"
 import { Star, ImageIcon, ArrowRight, Crown } from "lucide-react"
+import Image from "next/image"
 
 export function FeaturedCollections() {
   const featuredCollections = [
@@ -87,9 +88,11 @@ export function FeaturedCollections() {
             <Card key={collection.id} className="group hover:shadow-2xl transition-all duration-300 overflow-hidden">
               {/* Cover Image */}
               <div className="relative aspect-[4/3] overflow-hidden">
-                <img
+                <Image
                   src={collection.coverImage || "/placeholder.svg"}
                   alt={collection.title}
+                  width={800}
+                  height={600}
                   className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
                 />
 
@@ -114,7 +117,7 @@ export function FeaturedCollections() {
                         key={index}
                         className="w-12 h-12 rounded-lg overflow-hidden border-2 border-white/50 opacity-80 hover:opacity-100 transition-opacity"
                       >
-                        <img src={image || "/placeholder.svg"} alt="" className="w-full h-full object-cover" />
+                        <Image width={100} height={100} src={image || "/placeholder.svg"} alt="" className="w-full h-full object-cover" />
                       </div>
                     ))}
                     <div className="text-white text-sm font-medium">+{collection.artworkCount - 4} more</div>

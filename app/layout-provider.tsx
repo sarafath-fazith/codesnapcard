@@ -3,6 +3,7 @@
 import type React from "react"
 import { useState, useEffect } from "react"
 import { Suspense } from "react"
+import { usePathname } from "next/navigation"
 import { CartProvider } from "@/contexts/cart-context"
 import { UserProvider } from "@/contexts/user-context"
 import Provider from "./provider"
@@ -13,6 +14,8 @@ import { Loader } from "@/components/ui/loader"
 export function LayoutProvider({ children }: { children: React.ReactNode }) {
   const [isLoading, setIsLoading] = useState(true)
   const [showLoader, setShowLoader] = useState(false)
+  const pathname = usePathname()
+  const isAdminPage = pathname.startsWith("/admin")
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -46,7 +49,7 @@ export function LayoutProvider({ children }: { children: React.ReactNode }) {
               </div>
             ) : (
               <>
-                <Header />
+                {!isAdminPage && <Header />}
                 <main className="flex-grow">
                   <Suspense
                     fallback={
@@ -58,7 +61,7 @@ export function LayoutProvider({ children }: { children: React.ReactNode }) {
                     {children}
                   </Suspense>
                 </main>
-                <Footer />
+                {!isAdminPage && <Footer />}
               </>
             )}
           </div>

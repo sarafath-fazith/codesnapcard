@@ -2,6 +2,8 @@ import type React from "react"
 import type { Metadata } from "next"
 import { Nunito, Space_Grotesk } from "next/font/google"
 import { LayoutProvider } from "./layout-provider"
+import { ProductsProvider } from "@/contexts/products-context"
+import { SectionsProvider } from "@/contexts/sections-context"
 import "./globals.css"
 
 const nunito = Nunito({
@@ -31,7 +33,11 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`font-sans ${nunito.variable} ${spaceGrotesk.variable} antialiased`}>
-        <LayoutProvider>{children}</LayoutProvider>
+        <ProductsProvider>
+          <SectionsProvider>
+            <LayoutProvider>{children}</LayoutProvider>
+          </SectionsProvider>
+        </ProductsProvider>
       </body>
     </html>
   )
