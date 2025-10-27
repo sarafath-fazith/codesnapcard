@@ -1,0 +1,16 @@
+rules_version = '2';
+
+service firebase.storage {
+  match /b/{bucket}/o {
+    // Allow public read access to the watermark image
+    match /watermark.png {
+      allow read: if true;
+    }
+
+    // Deny read access to all other files by default.
+    // Your backend will use the Admin SDK to bypass these rules and access the images.
+    match /{allPaths=**} {
+      allow read, write: if false;
+    }
+  }
+}

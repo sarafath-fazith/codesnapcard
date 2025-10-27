@@ -7,32 +7,10 @@ import { Instagram, Twitter, Facebook, Youtube, Mail, MapPin, Phone } from "luci
 export function Footer() {
   const footerSections = [
     {
-      title: "Marketplace",
-      links: [
-        { name: "Browse Gallery", href: "/gallery" },
-        { name: "Collections", href: "/collections" },
-        { name: "Featured Creators", href: "/author/1" },
-        { name: "Code Snippets", href: "/gallery?category=code" },
-        { name: "Digital Assets", href: "/gallery?category=assets" },
-      ],
-    },
-    {
-      title: "For Creators",
-      links: [
-        { name: "Sell Your Work", href: "/auth/signup" },
-        { name: "Creator Dashboard", href: "/profile" },
-        { name: "Upload Assets", href: "/profile" },
-        { name: "Creator Resources", href: "/resources" },
-        { name: "Community", href: "/community" },
-      ],
-    },
-    {
       title: "Support",
       links: [
         { name: "Help Center", href: "/help" },
         { name: "Contact Us", href: "/contact" },
-        { name: "Coin System", href: "/coins" },
-        { name: "Payment Methods", href: "/checkout" },
         { name: "Refund Policy", href: "/refund-policy" },
       ],
     },
@@ -40,8 +18,6 @@ export function Footer() {
       title: "Company",
       links: [
         { name: "About Us", href: "/about" },
-        { name: "Careers", href: "/careers" },
-        { name: "Press Kit", href: "/press" },
         { name: "Privacy Policy", href: "/privacy" },
         { name: "Terms of Service", href: "/terms" },
       ],
@@ -80,6 +56,9 @@ export function Footer() {
               </div>
             </div>
           </div>
+
+          {/* Spacer */}
+          <div className="lg:col-span-2"></div>
 
           {/* Footer Links */}
           {footerSections.map((section) => (

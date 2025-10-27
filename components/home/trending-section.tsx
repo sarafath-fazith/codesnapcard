@@ -10,6 +10,7 @@ import Image from "next/image"
 
 export function TrendingSection() {
   const { products } = useProducts()
+  const trendingProducts = products.filter(product => product.trending)
 
   return (
     <section className="py-20 bg-muted/20">
@@ -28,7 +29,7 @@ export function TrendingSection() {
         </div>
 
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {products.map((product) => (
+          {trendingProducts.map((product) => (
             <Card key={product.id} className="group hover:shadow-xl transition-all duration-300 overflow-hidden">
               <div className="relative aspect-[4/3] overflow-hidden">
                 <Image

@@ -1,15 +1,24 @@
-"use client"
+'use client'
 
 import { useState } from "react"
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
 import { Input } from "@/components/ui/input"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
-import { Search, SlidersHorizontal, Grid3X3, List, TrendingUp, Clock, Star, Gift, Book, Code, GraduationCap } from "lucide-react"
+import { Search, SlidersHorizontal, Grid3X3, List, TrendingUp, Clock, Star } from "lucide-react"
 
-export function ProductsHeader() {
+interface ProductsHeaderProps {
+  totalResults: number;
+  itemsPerPage: number;
+  currentPage: number;
+}
+
+export function ProductsHeader({ totalResults, itemsPerPage, currentPage }: ProductsHeaderProps) {
   const [viewMode, setViewMode] = useState<"grid" | "list">("grid")
   const [searchQuery, setSearchQuery] = useState("")
+
+  const startItem = totalResults > 0 ? (currentPage - 1) * itemsPerPage + 1 : 0;
+  const endItem = Math.min(currentPage * itemsPerPage, totalResults);
 
   return (
     <section className="bg-muted/30 border-b">
@@ -104,9 +113,9 @@ export function ProductsHeader() {
 
         {/* Results Info */}
         <div className="mt-6 flex items-center justify-between text-sm text-muted-foreground">
-          <span>Showing 1-24 of 12,847 results</span>
+          <span>Showing {startItem}-{endItem} of {totalResults} results</span>
           <div className="flex items-center space-x-4">
-            <span>Updated 2 minutes ago</span>
+            <span>Updated just now</span>
           </div>
         </div>
       </div>
