@@ -1,4 +1,4 @@
-"use client"
+'use client'
 
 import type React from "react"
 import { useState } from "react"
@@ -37,13 +37,12 @@ export function LoginForm() {
         toast.success("Login successful!", {
           description: response.data.message,
         })
-        // Save user email to local storage to persist login state
+
         if (typeof window !== "undefined") {
           localStorage.setItem("userEmail", formData.email)
         }
-        // Redirect and refresh to update the header
+
         router.push("/")
-        router.refresh()
       }
     } catch (error) {
       let errorMessage = "An unexpected error occurred during login."

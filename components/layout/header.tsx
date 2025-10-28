@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react"
 import Link from "next/link"
-import { useRouter } from "next/navigation"
+import { useRouter, usePathname } from "next/navigation"
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
 import { Menu, X, Search, ShoppingCart, User, Coins } from "lucide-react"
@@ -16,20 +16,23 @@ export function Header() {
   const [userCoins] = useState(1250) // Mock user coins
   const { state } = useCart()
   const router = useRouter()
+  const pathname = usePathname() // Get the current path
 
   useEffect(() => {
+    // Re-check auth status on every navigation change
     if (typeof window !== 'undefined') {
       const email = localStorage.getItem('userEmail')
       setUserEmail(email)
     }
-  }, [])
+  }, [pathname]) // Re-run the effect when the path changes
 
   const handleLogout = () => {
     if (typeof window !== 'undefined') {
       localStorage.removeItem('userEmail')
     }
-    setUserEmail(null) // Instantly update the UI
-    router.push('/auth') // Redirect to login page
+    setUserEmail(null)
+    setIsMenuOpen(false)
+    router.push('/auth')
   }
 
   const navigation = [
@@ -127,7 +130,7 @@ export function Header() {
               </nav>
 
               <div className="flex items-center justify-between pt-4 border-t">
-                <Link href="/buy-coins" className="flex items-center space-x-2">
+                <Link href="/buy-coins" className="flex items-center space-x-2" onClick={() => setIsMenuOpen(false)}>
                   <Coins className="h-4 w-4 text-secondary" />
                   <span className="text-sm font-semibold text-secondary">
                     {userCoins.toLocaleString()} Coins
@@ -135,7 +138,7 @@ export function Header() {
                 </Link>
                 <div className="flex items-center space-x-2">
                   <Button variant="ghost" size="sm" asChild>
-                    <Link href="/cart">
+                    <Link href="/cart" onClick={() => setIsMenuOpen(false)}>
                       <ShoppingCart className="h-5 w-5" />
                     </Link>
                   </Button>
@@ -144,7 +147,7 @@ export function Header() {
                     <UserNav email={userEmail} onLogout={handleLogout} />
                   ) : (
                     <Button variant="ghost" size="sm" asChild>
-                      <Link href="/auth">
+                      <Link href="/auth" onClick={() => setIsMenuOpen(false)}>
                         <User className="h-5 w-5" />
                       </Link>
                     </Button>
