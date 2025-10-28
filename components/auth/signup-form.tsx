@@ -2,8 +2,7 @@
 
 import type React from "react"
 import { useState } from "react"
-import { useToast } from "@/hooks/use-toast"
-import { signIn } from "next-auth/react"
+import { toast } from "sonner"
 import axios from "axios"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
@@ -16,7 +15,6 @@ export function SignupForm() {
   const [showPassword, setShowPassword] = useState(false)
   const [showConfirmPassword, setShowConfirmPassword] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
-  const { toast } = useToast()
   const router = useRouter()
   const [formData, setFormData] = useState({
     name: "",
@@ -36,32 +34,39 @@ export function SignupForm() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     if (formData.password !== formData.confirmPassword) {
-      return toast({ title: "Error", description: "Passwords do not match", variant: "destructive" })
+      return toast.error("Passwords do not match")
     }
 
     setIsLoading(true)
 
     try {
-      const response = await axios.post("http://13.235.128.128:8080/api/signup", {
+      const response = await axios.post("https://tile.apmkingstrack.com/api/signup", {
         fullname: formData.name,
         emailID: formData.email,
         password: formData.password,
       })
 
-      if (response.status === 200 || response.status === 201) {
-        toast({ title: "Success", description: "Account created successfully!" })
-        await signIn("credentials", {
-          email: formData.email,
-          password: formData.password,
-          redirect: false,
+      if (response.data.error) {
+        toast.error("Signup Failed", {
+          description: response.data.error,
         })
-        router.push("/")
+      } else {
+        toast.success("Account Created!", {
+          description: response.data.message || "Please log in to continue.",
+        })
+        router.push("/auth/login")
       }
     } catch (error) {
-      toast({ title: "Error", description: "Something went wrong", variant: "destructive" })
+      let errorMessage = "An unexpected error occurred during signup."
+      if (axios.isAxiosError(error) && error.response) {
+        errorMessage = error.response.data.error || errorMessage
+      }
+      toast.error("Signup Failed", {
+        description: errorMessage,
+      })
+    } finally {
+      setIsLoading(false)
     }
-
-    setIsLoading(false)
   }
 
   return (

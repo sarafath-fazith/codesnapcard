@@ -4,6 +4,7 @@ import { Nunito, Space_Grotesk } from "next/font/google"
 import { LayoutProvider } from "./layout-provider"
 import { ProductsProvider } from "@/contexts/products-context"
 import { SectionsProvider } from "@/contexts/sections-context"
+import { Toaster } from "@/components/ui/sonner"
 import "./globals.css"
 
 const nunito = Nunito({
@@ -38,6 +39,7 @@ export default function RootLayout({
             <LayoutProvider>{children}</LayoutProvider>
           </SectionsProvider>
         </ProductsProvider>
+        <Toaster position="top-center" />
       </body>
     </html>
   )

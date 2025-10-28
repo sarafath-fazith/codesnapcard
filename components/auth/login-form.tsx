@@ -1,48 +1,60 @@
 "use client"
 
 import type React from "react"
-
 import { useState } from "react"
-import { signIn } from "next-auth/react"
-import { useRouter } from "next/navigation"
+import { toast } from "sonner"
+import axios from "axios"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
-import { Checkbox } from "@/components/ui/checkbox"
 import { Eye, EyeOff, Mail, Lock } from "lucide-react"
-import Link from "next/link"
-import { useToast } from "@/hooks/use-toast"
+import { useRouter } from "next/navigation"
 
 export function LoginForm() {
   const [showPassword, setShowPassword] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
+  const router = useRouter()
   const [formData, setFormData] = useState({
     email: "",
     password: "",
-    rememberMe: false,
   })
-  const router = useRouter()
-  const { toast } = useToast()
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     setIsLoading(true)
 
-    const result = await signIn("credentials", {
-      ...formData,
-      redirect: false,
-    })
-
-    setIsLoading(false)
-
-    if (result?.error) {
-      toast({
-        title: "Login Failed",
-        description: result.error,
-        variant: "destructive",
+    try {
+      const response = await axios.post("https://tile.apmkingstrack.com/api/login", {
+        emailaddress: formData.email,
+        password: formData.password,
       })
-    } else {
-      router.push("/")
+
+      if (response.data.error) {
+        toast.error("Login Failed", {
+          description: response.data.error,
+        })
+      } else {
+        toast.success("Login successful!", {
+          description: response.data.message,
+        })
+        // Save user email to local storage to persist login state
+        if (typeof window !== "undefined") {
+          localStorage.setItem("userEmail", formData.email)
+        }
+        // Redirect and refresh to update the header
+        router.push("/")
+        router.refresh()
+      }
+    } catch (error) {
+      let errorMessage = "An unexpected error occurred during login."
+      if (axios.isAxiosError(error) && error.response) {
+        errorMessage = error.response.data.error || errorMessage
+      }
+      toast.error("Login Failed", {
+        description: errorMessage,
+      })
+    } finally {
+      setIsLoading(false)
     }
   }
 
@@ -56,7 +68,7 @@ export function LoginForm() {
           <Input
             id="email"
             type="email"
-            placeholder="Enter your email"
+            placeholder="john@example.com"
             value={formData.email}
             onChange={(e) => setFormData((prev) => ({ ...prev, email: e.target.value }))}
             className="pl-10"
@@ -89,32 +101,19 @@ export function LoginForm() {
         </div>
       </div>
 
-      {/* Remember Me & Forgot Password */}
-      <div className="flex items-center justify-between">
-        <div className="flex items-center space-x-2">
-          <Checkbox
-            id="rememberMe"
-            checked={formData.rememberMe}
-            onCheckedChange={(checked) => setFormData((prev) => ({ ...prev, rememberMe: checked as boolean }))}
-          />
-          <Label htmlFor="rememberMe" className="text-sm">
-            Remember me
-          </Label>
-        </div>
-        <Link href="/auth/forgot-password" className="text-sm text-primary hover:underline">
-          Forgot password?
-        </Link>
-      </div>
-
       {/* Submit Button */}
-      <Button type="submit" className="w-full" disabled={isLoading}>
+      <Button
+        type="submit"
+        className="w-full"
+        disabled={isLoading}
+      >
         {isLoading ? (
           <div className="flex items-center space-x-2">
             <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white"></div>
-            <span>Signing in...</span>
+            <span>Logging in...</span>
           </div>
         ) : (
-          "Sign In"
+          "Login"
         )}
       </Button>
     </form>
